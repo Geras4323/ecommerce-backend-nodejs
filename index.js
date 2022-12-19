@@ -1,7 +1,8 @@
 const express = require('express');
 const routerApi = require('./routes/index');
 const cors = require('cors');
-const { errorLogger, errorHandler, boomHandler } = require('./middlewares/error.handler')
+require('dotenv').config();
+const { errorLogger, errorHandler, boomHandler, sqlError } = require('./middlewares/error.handler');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -24,10 +25,11 @@ routerApi(app)
 
 
 // app.use(errorLogger);
+app.use(sqlError);
 app.use(boomHandler);
 app.use(errorHandler);
 
 
 app.listen(port, () => {
-  console.log(`> Listening on port ${port} --> http://localhost:5000`);
+  console.log(`> Listening on port ${port}`);
 })
