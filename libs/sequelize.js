@@ -7,6 +7,7 @@ const { setupModels } = require('../db/models/index');
 const sequelize = new Sequelize(URI, {
   dialect: 'postgres',
   logging: false,
+  // logging: console.log,
 })
 
 setupModels(sequelize);

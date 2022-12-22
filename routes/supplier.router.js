@@ -1,26 +1,26 @@
 const express = require('express');
 
-const CustomerService = require('../services/customer.service');
+const SupplierService = require('../services/supplier.service');
 const validationHandler = require('../middlewares/validation.handler');
 const {
-  getCustomerSchema,
-  createCustomerSchema,
-  updateCustomerSchema,
-  updatePartiallyCustomerSchema
-} = require('../schemas/customer.schema');
+  getSupplierSchema,
+  createSupplierSchema,
+  updateSupplierSchema,
+  updatePartiallySupplierSchema
+} = require('../schemas/supplier.schema');
 
 
 const router = express.Router();
-const service = new CustomerService();
+const service = new SupplierService();
 
-// GET
+// GET ////////////////////////////////////////////////////
 router.get('/', async (req, res) => {
   const customers = await service.find();
   res.status(200).json(customers);
 })
 
 router.get('/:id',
-  validationHandler(getCustomerSchema, 'params'),
+  validationHandler(getSupplierSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -32,24 +32,24 @@ router.get('/:id',
   }
 )
 
-// POST
+// POST ////////////////////////////////////////////////////
 router.post('/',
-  validationHandler(createCustomerSchema, 'body'),
+  validationHandler(createSupplierSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
-      const newCustomer = await service.create(body);
-      res.status(201).json(newCustomer);
+      const newSupplier = await service.create(body);
+      res.status(201).json(newSupplier);
     } catch (err) {
       next(err);
     }
   }
 )
 
-// PUT
+// PUT ////////////////////////////////////////////////////
 router.put('/:id',
-  validationHandler(getCustomerSchema, 'params'),
-  validationHandler(updateCustomerSchema, 'body'),
+  validationHandler(getSupplierSchema, 'params'),
+  validationHandler(updateSupplierSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -62,10 +62,10 @@ router.put('/:id',
   }
 )
 
-// PATCH
+// PATCH ////////////////////////////////////////////////////
 router.patch('/:id',
-  validationHandler(getCustomerSchema, 'params'),
-  validationHandler(updatePartiallyCustomerSchema, 'body'),
+  validationHandler(getSupplierSchema, 'params'),
+  validationHandler(updatePartiallySupplierSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -78,9 +78,9 @@ router.patch('/:id',
   }
 )
 
-// DELETE
+// DELETE ////////////////////////////////////////////////////
 router.delete('/:id',
-  validationHandler(getCustomerSchema, 'params'),
+  validationHandler(getSupplierSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;

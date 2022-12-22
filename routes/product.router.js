@@ -14,7 +14,7 @@ const {
 const router = express.Router();
 const service = new ProductsService();
 
-// GET
+// GET ////////////////////////////////////////////////////
 router.get('/',
   validationHandler(queryProductSchema, 'query'),
   async (req, res, next) => {
@@ -41,7 +41,7 @@ router.get('/:id',
   }
 )
 
-// POST
+// POST ////////////////////////////////////////////////////
 router.post('/',
   validationHandler(createProductSchema, 'body'),
   async (req, res, next) => {
@@ -55,7 +55,7 @@ router.post('/',
   }
 )
 
-// PUT
+// PUT ////////////////////////////////////////////////////
 router.put('/:id',
   validationHandler(getProductSchema, 'params'),
   validationHandler(updateProductSchema, 'body'),
@@ -71,7 +71,7 @@ router.put('/:id',
   }
 )
 
-// PATCH
+// PATCH ////////////////////////////////////////////////////
 router.patch('/:id',
   validationHandler(getProductSchema, 'params'),
   validationHandler(updatePartiallyProductSchema, 'body'),
@@ -87,7 +87,7 @@ router.patch('/:id',
   }
 )
 
-// DELETE
+// DELETE ////////////////////////////////////////////////////
 router.delete('/:id',
   validationHandler(getProductSchema, 'params'),
   async (req, res, next) => {

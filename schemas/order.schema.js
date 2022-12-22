@@ -1,35 +1,37 @@
 const Joi = require('joi');
 
-const id          = Joi.number().integer();
-const payed       = Joi.boolean();
-const CustomerId  = Joi.number().integer();
-const OrderId     = Joi.number().integer();
-const ProductId   = Joi.number().integer();
-const amount      = Joi.number().integer().min(1);
+const id         = Joi.number().integer().positive();
+const userID     = Joi.number().integer().positive();
+const total      = Joi.number().positive();
+const orderID    = Joi.number().integer().positive();
+const productID  = Joi.number().integer().positive();
+const quantity   = Joi.number().integer().min(1).positive();
+
 
 const getOrderSchema = Joi.object({
-  id: id.required()
+  id:        id.required(),
+  productID: productID,
 })
 
 const createOrderSchema = Joi.object({
-  payed: payed,
-  CustomerId: CustomerId.required(),
+  userID:    userID.required(),
+  total:     total.required(),
 })
 
 const addProductSchema = Joi.object({
-  OrderId: OrderId.required(),
-  ProductId: ProductId.required(),
-  amount: amount.required(),
+  orderID:   orderID.required(),
+  productID: productID.required(),
+  quantity:  quantity.required(),
 })
 
 const updateOrderSchema = Joi.object({
-  payed: payed.required(),
-  CustomerId: CustomerId.required(),
+  userID:    userID.required(),
+  total:     total.required(),
 })
 
 const updatePartiallyOrderSchema = Joi.object({
-  payed: payed,
-  CustomerId: CustomerId,
+  userID:    userID,
+  total:     total,
 })
 
 module.exports = {

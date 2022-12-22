@@ -2,29 +2,34 @@ const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
 
-class CustomerService {
+class SupplierService {
   constructor() {}
 
   async find() {
-    const customers = await models.Customer.findAll();
+    const customers = await models.Supplier.findAll();
     return customers;
   }
 
   async findOne(id) {
-    const customer = await models.Customer.findByPk(id, {
-      include: ['User', 'Orders']
+    const customer = await models.Supplier.findByPk(id, {
+      include: ['products']
     });
     if (!customer) {
-      throw boom.notFound('Customer not found');
+      throw boom.notFound('Supplier not found');
     }
     return customer;
   }
 
   async create(data) {
-    const created = await models.Customer.create(data, {
-      include: ['User']
-    });
-    return created;
+    if (Array.isArray(data)) {
+      for (const supplier of data) {
+        await models.Supplier.create(supplier);
+      }
+      return { message: 'Suppliers created' }
+    } else {
+      const newSupplier = await models.Supplier.create(data);
+      return newSupplier;
+    }
   }
 
   async update(id, data) {
@@ -46,4 +51,4 @@ class CustomerService {
   }
 }
 
-module.exports = CustomerService;
+module.exports = SupplierService;

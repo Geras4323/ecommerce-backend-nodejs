@@ -1,40 +1,40 @@
 const { DataTypes, Model } = require('sequelize');
 
-const { USERS_TABLE } = require('./user.model');
+const { ORDERS_TABLE } = require('./order.model');
 
-const OrderSchema = {
+const PaymentSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
     type: DataTypes.INTEGER,
   },
-  userID: {
+  orderID: {
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
-      model: USERS_TABLE,
+      model: ORDERS_TABLE,
       key: 'id',
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },
-  total: {
+  amount: {
     allowNull: false,
     type: DataTypes.FLOAT,
-  },
+  }
 }
 
-const ORDERS_TABLE = 'orders';
+const PAYMENTS_TABLE = 'payments';
 
-class Order extends Model {
+class Payment extends Model {
   static config(sequelize) {
     return {
       sequelize,
-      tableName: ORDERS_TABLE,
-      modelName: 'Order',
+      tableName: PAYMENTS_TABLE,
+      modelName: 'Payment',
     }
   }
 }
 
-module.exports = { Order, OrderSchema, ORDERS_TABLE };
+module.exports = { Payment, PaymentSchema, PAYMENTS_TABLE }

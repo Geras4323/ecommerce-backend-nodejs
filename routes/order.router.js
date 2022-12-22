@@ -45,7 +45,7 @@ router.post('/',
       const body = req.body;
       const newOrder = await service.create(body);
       res.status(201).json(newOrder);
-    } catch(err) {
+    } catch (err) {
       next(err);
     }
   }
@@ -103,6 +103,19 @@ router.delete('/:id',
     try {
       const { id } = req.params;
       const deleted = await service.delete(id);
+      res.status(200).json(deleted);
+    } catch(err) {
+      next(err)
+    }
+  }
+)
+
+router.delete('/:id/remove-product/:productID',
+  validationHandler(getOrderSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id, productID } = req.params;
+      const deleted = await service.removeProduct(id, productID);
       res.status(200).json(deleted);
     } catch(err) {
       next(err)

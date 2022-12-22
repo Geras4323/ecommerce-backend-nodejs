@@ -1,4 +1,4 @@
-const faker = require('faker');
+// const faker = require('faker');
 const boom = require('@hapi/boom');
 const { Op } = require('sequelize');
 
@@ -57,8 +57,15 @@ class ProductsService {
   }
 
   async create(data) {
-    const newProduct = await models.Product.create(data);
-    return newProduct;
+    if (Array.isArray(data)) {
+      for (const product of data) {
+        await models.Product.create(product);
+      }
+      return { message: 'Products created' }
+    } else {
+      const newProduct = await models.Product.create(data);
+      return newProduct;
+    }
   }
 
   async update(id, changes) {

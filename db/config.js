@@ -7,9 +7,11 @@ module.exports = {
   development: {
     url: URI,
     dialect: 'postgres',
+    seederStorage: 'sequelize',
   },
   production: {
     url: productionURI,
     dialect: 'postgres',
+    seederStorage: 'sequelize',
   }
 }

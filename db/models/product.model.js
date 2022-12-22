@@ -1,6 +1,7 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 
-const { CATEGORY_TABLE } = require('./category.model');
+const { CATEGORIES_TABLE } = require('./category.model');
+const { SUPPLIERS_TABLE } = require('./supplier.model');
 
 const ProductSchema = {
 	id: {
@@ -9,57 +10,62 @@ const ProductSchema = {
 		primaryKey: true,
 		type: DataTypes.INTEGER,
 	},
+	categoryID: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: false,
+    references: {
+      model: CATEGORIES_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+	supplierID: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: false,
+    references: {
+      model: SUPPLIERS_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
 	name: {
 		allowNull: false,
 		type: DataTypes.STRING,
-	},
-	image: {
-		allowNull: false,
-		type: DataTypes.STRING,
+    unique: true,
 	},
 	description: {
 		allowNull: false,
 		type: DataTypes.TEXT,
 	},
+	image: {
+		allowNull: true,
+		type: DataTypes.STRING,
+	},
 	price: {
 		allowNull: false,
 		type: DataTypes.FLOAT,
 	},
-  isVisible: {
+  active: {
     allowNull: false,
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   },
-	createdAt: {
-		allowNull: false,
-		type: DataTypes.DATE,
-		field: 'created_at',
-		defaultValue: Sequelize.NOW,
-	},
-  CategoryId: {
-    allowNull: false,
-    type: DataTypes.INTEGER,
-    unique: false,
-    references: {
-      model: CATEGORY_TABLE,
-      key: 'id',
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-  }
 }
 
-const PRODUCT_TABLE = 'products';
+const PRODUCTS_TABLE = 'products';
 
 class Product extends Model {
   static config(sequelize) {
     return {
       sequelize,
-      tableName: PRODUCT_TABLE,
+      tableName: PRODUCTS_TABLE,
       modelName: 'Product',
-      timestamps: false,
     }
   }
 }
 
-module.exports = { Product, ProductSchema, PRODUCT_TABLE };
+module.exports = { Product, ProductSchema, PRODUCTS_TABLE };

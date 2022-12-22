@@ -2,7 +2,7 @@ const express = require('express');
 const routerApi = require('./routes/index');
 const cors = require('cors');
 require('dotenv').config();
-const { errorLogger, errorHandler, boomHandler, sqlError } = require('./middlewares/error.handler');
+const { errorLogger, errorHandler, boomHandler, ormErrorHandler } = require('./middlewares/error.handler');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -24,8 +24,8 @@ app.use(cors(options))
 routerApi(app)
 
 
-// app.use(errorLogger);
-app.use(sqlError);
+app.use(errorLogger);
+app.use(ormErrorHandler);
 app.use(boomHandler);
 app.use(errorHandler);
 

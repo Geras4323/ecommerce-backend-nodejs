@@ -13,7 +13,7 @@ const {
 const router = express.Router();
 const service = new UserService();
 
-// GET
+// GET ////////////////////////////////////////////////////
 router.get('/', async (req, res) => {
   const users = await service.find();
   res.status(200).json(users);
@@ -32,7 +32,7 @@ router.get('/:id',
   }
 )
 
-// POST
+// POST ////////////////////////////////////////////////////
 router.post('/',
   validationHandler(createUserSchema, 'body'),
   async (req, res, next) => {
@@ -46,7 +46,7 @@ router.post('/',
   }
 )
 
-// PUT
+// PUT ////////////////////////////////////////////////////
 router.put('/:id',
   validationHandler(getUserSchema, 'params'),
   validationHandler(updateUserSchema, 'body'),
@@ -62,7 +62,7 @@ router.put('/:id',
   }
 )
 
-// PATCH
+// PATCH ////////////////////////////////////////////////////
 router.patch('/:id',
   validationHandler(getUserSchema, 'params'),
   validationHandler(updatePartiallyUserSchema, 'body'),
@@ -78,7 +78,7 @@ router.patch('/:id',
   }
 )
 
-// DELETE
+// DELETE ////////////////////////////////////////////////////
 router.delete('/:id',
   validationHandler(getUserSchema, 'params'),
   async (req, res, next) => {

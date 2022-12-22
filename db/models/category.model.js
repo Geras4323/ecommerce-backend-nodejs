@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 
 const CategorySchema = {
   id: {
@@ -12,28 +12,23 @@ const CategorySchema = {
     unique: true,
     type: DataTypes.STRING,
   },
-  image: {
+  active: {
     allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
   },
-  createdAt: {
-    allowNull: false,
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  }
 }
 
-const CATEGORY_TABLE = 'categories';
+const CATEGORIES_TABLE = 'categories';
 
 class Category extends Model {
   static config(sequelize) {
     return {
       sequelize,
-      tableName: CATEGORY_TABLE,
+      tableName: CATEGORIES_TABLE,
       modelName: 'Category',
-      timestamps: false,
     }
   }
 }
 
-module.exports = { Category, CategorySchema, CATEGORY_TABLE };
+module.exports = { Category, CategorySchema, CATEGORIES_TABLE };

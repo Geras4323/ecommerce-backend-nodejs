@@ -2,6 +2,7 @@ const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
 
+
 class OrderService {
   constructor() {}
 
@@ -12,7 +13,7 @@ class OrderService {
 
   async findOne(id) {
     const order = await models.Order.findByPk(id, {
-      include: ['Customer', 'Products']
+      include: ['products', 'payments']
     });
     if (!order) {
       throw boom.notFound('Order not found');
@@ -21,8 +22,15 @@ class OrderService {
   }
 
   async create(data) {
-    const newOrder = await models.Order.create(data);
-    return newOrder;
+    if (Array.isArray(data)) {
+      for (const service of data) {
+        await models.Order.create(service);
+      }
+      return { message: 'Orders created' }
+    } else {
+      const newOrder = await models.Order.create(data);
+      return newOrder;
+    }
   }
 
   async addProduct(data) {
@@ -46,6 +54,17 @@ class OrderService {
     const order = await this.findOne(id);
     await order.destroy();
     return { id, message: 'Successfully deleted' };
+  }
+
+  async removeProduct(id, productID) {
+    const order_product = await models.OrderProduct.findOne({
+      where: {
+        orderID: id,
+        productID: productID,
+      }
+    });
+    await order_product.destroy();
+    return { id, message: 'Product removed from order' };
   }
 }
 

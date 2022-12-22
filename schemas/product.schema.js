@@ -1,12 +1,13 @@
 const Joi = require('joi');
 
-const id          = Joi.number().integer();
+const id          = Joi.number().integer().positive();
+const categoryID  = Joi.number().integer().positive();
+const supplierID  = Joi.number().integer().positive();
 const name        = Joi.string().min(3);
-const image       = Joi.string().uri();
 const description = Joi.string().min(10);
+const image       = Joi.string().uri();
 const price       = Joi.number().positive();
-const isVisible   = Joi.boolean();
-const CategoryId  = Joi.number().integer();
+const active      = Joi.boolean();
 
 const limit       = Joi.number().integer().min(0);
 const offset      = Joi.number().integer().min(0);
@@ -15,7 +16,7 @@ const price_max   = Joi.number().integer().min(0);
 
 
 const getProductSchema = Joi.object({
-  id: id.required(),
+  id:   id.required(),
 })
 
 const queryProductSchema = Joi.object({
@@ -30,30 +31,33 @@ const queryProductSchema = Joi.object({
 })
 
 const createProductSchema = Joi.object({
-  name: name.required(),
-  image: image.required(),
-  description: description.required(),
-  price: price.required(),
-  isVisible: isVisible,
-  CategoryId: CategoryId.required(),
+  categoryID:   categoryID.required(),
+  supplierID:   supplierID.required(),
+  name:         name.required(),
+  description:  description.required(),
+  image:        image.required(),
+  price:        price.required(),
+  active:       active,
 })
 
 const updateProductSchema = Joi.object({
-  name: name.required(),
-  image: image.required(),
-  description: description.required(),
-  price: price.required(),
-  isVisible: isVisible.required(),
-  CategoryId: CategoryId.required(),
+  categoryID:   categoryID.required(),
+  supplierID:   supplierID.required(),
+  name:         name.required(),
+  description:  description.required(),
+  image:        image.required(),
+  price:        price.required(),
+  active:       active.required(),
 })
 
 const updatePartiallyProductSchema = Joi.object({
-  name: name,
-  image: image,
-  description: description,
-  price: price,
-  isVisible: isVisible,
-  CategoryId: CategoryId,
+  categoryID:   categoryID,
+  supplierID:   supplierID,
+  name:         name,
+  description:  description,
+  image:        image,
+  price:        price,
+  active:       active,
 })
 
 module.exports = {
