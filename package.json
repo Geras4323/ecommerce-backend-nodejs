@@ -22,7 +22,7 @@
     "seeders:undo:all": "sequelize-cli db:seed:undo:all",
     "seeders:undo:all:prod": "sequelize-cli db:seed:undo:all --env production",
     "db:regenerate": "npm run seeders:undo:all && npm run migrations:revert:all && npm run migrations:migrate && npm run seeders:run",
-    "db:regenerate:prod": "npm run seeders:undo:all && npm run migrations:revert:all && npm run migrations:migrate && npm run seeders:run --env production"
+    "db:regenerate:prod": "npm run seeders:undo:all:prod && npm run migrations:revert:all:prod && npm run migrations:migrate:prod && npm run seeders:run:prod"
   },
   "repository": {
     "type": "git",
