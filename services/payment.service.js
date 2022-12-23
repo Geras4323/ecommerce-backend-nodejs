@@ -1,4 +1,5 @@
 const boom = require('@hapi/boom');
+const { Op } = require('sequelize');
 
 const { models } = require('../libs/sequelize');
 
@@ -6,8 +7,35 @@ const { models } = require('../libs/sequelize');
 class PaymentService {
   constructor() {}
 
-  async find() {
-    const payments = await models.Payment.findAll();
+  async find(query) {
+    const options = {
+      where: {}
+    }
+    const { limit, offset } = query;
+    if (limit || offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+    const { amount } = query;
+    if (amount) {
+      options.where.amount = amount;
+    }
+    const { amount_min, amount_max } = query;
+    if (amount_min && amount_max) {
+      options.where.amount = {
+        [Op.between]: [amount_min, amount_max],
+      }
+    } else if (amount_min && !amount_max) {
+        options.where.amount = {
+          [Op.gte]: amount_min,
+        }
+    } else if (!amount_min && amount_max) {
+        options.where.amount = {
+          [Op.lte]: amount_max,
+        }
+    }
+
+    const payments = await models.Payment.findAll(options);
     return payments;
   }
 

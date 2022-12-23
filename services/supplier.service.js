@@ -5,8 +5,15 @@ const { models } = require('../libs/sequelize');
 class SupplierService {
   constructor() {}
 
-  async find() {
-    const customers = await models.Supplier.findAll();
+  async find(query) {
+    const options = {};
+    const { limit, offset } = query;
+    if (limit || offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+
+    const customers = await models.Supplier.findAll(options);
     return customers;
   }
 

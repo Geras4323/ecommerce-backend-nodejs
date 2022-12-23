@@ -6,8 +6,21 @@ const { models } = require('../libs/sequelize');
 class CategoryService {
   constructor() {}
 
-  async find() {
-    const categories = await models.Category.findAll();
+  async find(query) {
+    const options = {
+      where: {}
+    };
+    const { limit, offset } = query;
+    if (limit || offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+    const { active } = query;
+    if (active) {
+      options.where.active = active;
+    }
+
+    const categories = await models.Category.findAll(options);
     return categories;
   }
 

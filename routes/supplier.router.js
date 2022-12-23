@@ -4,6 +4,7 @@ const SupplierService = require('../services/supplier.service');
 const validationHandler = require('../middlewares/validation.handler');
 const {
   getSupplierSchema,
+  querySupplierSchema,
   createSupplierSchema,
   updateSupplierSchema,
   updatePartiallySupplierSchema
@@ -14,10 +15,17 @@ const router = express.Router();
 const service = new SupplierService();
 
 // GET ////////////////////////////////////////////////////
-router.get('/', async (req, res) => {
-  const customers = await service.find();
-  res.status(200).json(customers);
-})
+router.get('/',
+  validationHandler(querySupplierSchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const customers = await service.find(req.query);
+      res.status(200).json(customers);
+    } catch (err) {
+      next(err);
+    }
+  }
+)
 
 router.get('/:id',
   validationHandler(getSupplierSchema, 'params'),

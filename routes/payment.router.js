@@ -4,6 +4,7 @@ const PaymentService = require('../services/payment.service');
 const validationHandler = require('../middlewares/validation.handler');
 const {
   getPaymentSchema,
+  queryPaymentSchema,
   createPaymentSchema,
   updatePaymentSchema,
   updatePartiallyPaymentSchema
@@ -14,14 +15,17 @@ const router = express.Router();
 const service = new PaymentService();
 
 // GET ////////////////////////////////////////////////////
-router.get('/', async (req, res, next) => {
-  try {
-    const payments = await service.find();
-    res.status(200).json(payments);
-  } catch (err) {
-    next(err);
+router.get('/',
+  validationHandler(queryPaymentSchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const payments = await service.find(req.query);
+      res.status(200).json(payments);
+    } catch (err) {
+      next(err);
+    }
   }
-})
+)
 
 router.get('/:id',
   validationHandler(getPaymentSchema, 'params'),

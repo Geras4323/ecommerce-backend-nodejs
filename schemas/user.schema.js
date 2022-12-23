@@ -11,9 +11,19 @@ const phone      = customJoi.string().phoneNumber();
 const role       = Joi.string().valid('administrator', 'customer');
 const active     = Joi.boolean();
 
+const limit       = Joi.number().integer().min(0);
+const offset      = Joi.number().integer().min(0);
+
 
 const getUserSchema = Joi.object({
   id:   id.required(),
+})
+
+const queryUserSchema = Joi.object({
+  limit:      limit,
+  offset:     offset,
+  active:     active,
+  role:       role,
 })
 
 const createUserSchema = Joi.object({
@@ -51,6 +61,7 @@ const updatePartiallyUserSchema = Joi.object({
 
 module.exports = {
   getUserSchema,
+  queryUserSchema,
   createUserSchema,
   updateUserSchema,
   updatePartiallyUserSchema

@@ -6,8 +6,25 @@ const { models } = require('../libs/sequelize');
 class UserService {
   constructor() {}
 
-  async find() {
-    const users = await models.User.findAll();
+  async find(query) {
+    const options = {
+      where: {}
+    };
+    const { limit, offset } = query;
+    if (limit || offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+    const { active } = query;
+    if (active) {
+      options.where.active = active;
+    }
+    const { role } = query;
+    if (role) {
+      options.where.role = role;
+    }
+
+    const users = await models.User.findAll(options);
     return users;
   }
 

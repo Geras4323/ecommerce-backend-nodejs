@@ -4,6 +4,7 @@ const OrderService = require('../services/order.service');
 const validationHandler = require('../middlewares/validation.handler');
 const {
   getOrderSchema,
+  queryOrderSchema,
   createOrderSchema,
   addProductSchema,
   updateOrderSchema,
@@ -15,14 +16,17 @@ const router = express.Router();
 const service = new OrderService();
 
 // GET ////////////////////////////////////////////////////
-router.get('/', async (req, res, next) => {
-  try {
-    const products = await service.find();
-    res.status(200).json(products);
-  } catch (err) {
-    next(err);
+router.get('/',
+  validationHandler(queryOrderSchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const products = await service.find(req.query);
+      res.status(200).json(products);
+    } catch (err) {
+      next(err);
+    }
   }
-})
+)
 
 router.get('/:id',
   validationHandler(getOrderSchema, 'params'),

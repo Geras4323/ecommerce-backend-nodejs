@@ -4,6 +4,7 @@ const CategoryService = require('../services/category.service');
 const validationHandler = require('../middlewares/validation.handler');
 const {
   getCategorySchema,
+  queryCategorySchema,
   createCategorySchema,
   updateCategorySchema,
   updatePartiallyCategorySchema
@@ -14,14 +15,17 @@ const router = express.Router();
 const service = new CategoryService();
 
 // GET ////////////////////////////////////////////////////
-router.get('/', async (req, res, next) => {
-  try {
-    const categories = await service.find();
-    res.status(200).json(categories);
-  } catch (err) {
-    next(err);
+router.get('/',
+  validationHandler(queryCategorySchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const categories = await service.find(req.query);
+      res.status(200).json(categories);
+    } catch (err) {
+      next(err);
+    }
   }
-})
+)
 
 router.get('/:id',
   validationHandler(getCategorySchema, 'params'),

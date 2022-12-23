@@ -4,6 +4,7 @@ const UserService = require('../services/user.service');
 const validationHandler = require('../middlewares/validation.handler');
 const {
   getUserSchema,
+  queryUserSchema,
   createUserSchema,
   updateUserSchema,
   updatePartiallyUserSchema
@@ -14,10 +15,17 @@ const router = express.Router();
 const service = new UserService();
 
 // GET ////////////////////////////////////////////////////
-router.get('/', async (req, res) => {
-  const users = await service.find();
-  res.status(200).json(users);
-})
+router.get('/',
+  validationHandler(queryUserSchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const users = await service.find(req.query);
+      res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  }
+)
 
 router.get('/:id',
   validationHandler(getUserSchema, 'params'),

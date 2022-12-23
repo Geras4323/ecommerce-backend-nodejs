@@ -7,10 +7,23 @@ const orderID    = Joi.number().integer().positive();
 const productID  = Joi.number().integer().positive();
 const quantity   = Joi.number().integer().min(1).positive();
 
+const limit       = Joi.number().integer().min(0);
+const offset      = Joi.number().integer().min(0);
+const total_min   = Joi.number().min(0);
+const total_max   = Joi.number().min(0);
+
 
 const getOrderSchema = Joi.object({
   id:        id.required(),
   productID: productID,
+})
+
+const queryOrderSchema = Joi.object({
+  limit:     limit,
+  offset:    offset,
+  total:     total,
+  total_min: total_min,
+  total_max: total_max,
 })
 
 const createOrderSchema = Joi.object({
@@ -36,6 +49,7 @@ const updatePartiallyOrderSchema = Joi.object({
 
 module.exports = {
   getOrderSchema,
+  queryOrderSchema,
   createOrderSchema,
   addProductSchema,
   updateOrderSchema,

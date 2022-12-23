@@ -1,4 +1,5 @@
 const boom = require('@hapi/boom');
+const { Op } = require('sequelize');
 
 const { models } = require('../libs/sequelize');
 
@@ -6,8 +7,35 @@ const { models } = require('../libs/sequelize');
 class OrderService {
   constructor() {}
 
-  async find() {
-    const orders = await models.Order.findAll();
+  async find(query) {
+    const options = {
+      where: {}
+    }
+    const { limit, offset } = query;
+    if (limit || offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+    const { total } = query;
+    if (total) {
+      options.where.total = total;
+    }
+    const { total_min, total_max } = query;
+    if (total_min && total_max) {
+      options.where.total = {
+        [Op.between]: [total_min, total_max],
+      }
+    } else if (total_min && !total_max) {
+        options.where.total = {
+          [Op.gte]: total_min,
+        }
+    } else if (!total_min && total_max) {
+        options.where.total = {
+          [Op.lte]: total_max,
+        }
+    }
+
+    const orders = await models.Order.findAll(options);
     return orders;
   }
 
