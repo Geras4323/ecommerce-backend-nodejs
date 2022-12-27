@@ -9,17 +9,18 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json())
 
-const whitelist = ['http://localhost:8080', 'https://www.myapp.com']
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin) || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed'))
-    }
-  }
-}
-app.use(cors(options))
+// const whitelist = ['http://localhost:8080', 'https://www.myapp.com']
+// const options = {
+//   origin: (origin, callback) => {
+//     if (whitelist.includes(origin) || !origin) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed'))
+//     }
+//   }
+// }
+// app.use(cors(options))
+app.use(cors())
 
 routerApi(app)
 
