@@ -32,7 +32,7 @@ const createProductSchema = Joi.object({
   supplierID:   supplierID.required(),
   name:         name.required(),
   description:  description.required(),
-  image:        image.required(),
+  image:        image,
   price:        price.required(),
   active:       active,
 })
