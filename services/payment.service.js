@@ -72,7 +72,7 @@ class PaymentService {
   }
 
   async delete(id) {
-    const payment = this.findOne(id);
+    const payment = await this.findOne(id);
     await payment.destroy();
     return { id, message: 'Successfully deleted' };
   }
