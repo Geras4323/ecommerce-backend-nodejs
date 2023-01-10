@@ -1,6 +1,7 @@
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
+const { hashPassword } = require('../utils/hashing/hashPassword');
 
 
 class UserService {
@@ -42,11 +43,14 @@ class UserService {
   async create(data) {
     if (Array.isArray(data)) {
       for (const user of data) {
-        await models.User.create(user);
+        const hash = await hashPassword(user.password);
+        await models.User.create({...user, hash});
       }
       return { message: 'Users created' }
     } else {
-      const newUser = await models.User.create(data);
+      const hash = await hashPassword(data.password);
+      const newUser = await models.User.create({...data, password: hash});
+      delete newUser.dataValues.password;
       return newUser;
     }
   }
