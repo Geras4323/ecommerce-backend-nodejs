@@ -3,11 +3,15 @@ const passport = require('passport');
 require('dotenv').config();
 
 const { signToken } = require('../utils/token/signToken');
+const UserService = require('../services/user.service');
+const AuthService = require('../services/auth.service');
 
 
 const router = express.Router();
+const userService = new UserService();
+const authService = new AuthService();
 
-router.post('/',
+router.post('/login',
   passport.authenticate('local', { session: false }),
   (req, res, next) => {
     try {
@@ -16,12 +20,38 @@ router.post('/',
         sub: user.id,
         role: user.role,
       }
-      const signedToken = signToken(payload, process.env.JWT_SECRET);
+      const signedToken = signToken(payload, process.env.JWT_SECRET_LOGIN);
       res.json({ user, token: signedToken });
     } catch (err) {
       next(err);
     }
   }
 )
+
+router.post('/recovery',
+  async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      const user = await userService.findByEmail(email);
+      const sent = await authService.sendPasswordRecoveryEmail(user);
+      res.status(200).json(sent);
+    } catch (err) {
+      next(err);
+    }
+  }
+)
+
+router.post('/change-password',
+  async (req, res, next) => {
+    try {
+      const { token, newPassword } = req.body;
+      const updated = await authService.changePassword(token, newPassword);
+      res.status(200).json(updated);
+    } catch (err) {
+      next(err);
+    }
+  }
+)
+
 
 module.exports = router;

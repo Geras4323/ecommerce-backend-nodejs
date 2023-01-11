@@ -49,6 +49,16 @@ class OrderService {
     return order;
   }
 
+  async findByUser(userId) {
+    const options = {
+      where: {
+        userID: userId,
+      }
+    }
+    const orders = await models.Order.findAll(options)
+    return orders;
+  }
+
   async create(data) {
     if (Array.isArray(data)) {
       for (const service of data) {

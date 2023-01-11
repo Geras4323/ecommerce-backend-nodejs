@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET,
+  secretOrKey: process.env.JWT_SECRET_LOGIN,
 }
 
 const JwtStrategy = new Strategy(options, (payload, done) => {
