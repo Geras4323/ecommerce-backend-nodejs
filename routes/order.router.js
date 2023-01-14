@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const OrderService = require('../services/order.service');
 const validationHandler = require('../middlewares/validation.handler');
@@ -10,6 +11,7 @@ const {
   updateOrderSchema,
   updatePartiallyOrderSchema,
 } = require('../schemas/order.schema');
+const { checkRoles } = require('../middlewares/auth.handler');
 
 
 const router = express.Router();
@@ -102,6 +104,8 @@ router.patch('/:id',
 
 // DELETE //////////////////////////////////////////////////////
 router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(['administrator']),
   validationHandler(getOrderSchema, 'params'),
   async (req, res, next) => {
     try {

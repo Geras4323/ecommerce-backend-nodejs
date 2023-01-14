@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const UserService = require('../services/user.service');
 const validationHandler = require('../middlewares/validation.handler');
@@ -9,6 +10,7 @@ const {
   updateUserSchema,
   updatePartiallyUserSchema
 } = require('../schemas/user.schema');
+const { checkRoles } = require('../middlewares/auth.handler');
 
 
 const router = express.Router();
@@ -88,6 +90,8 @@ router.patch('/:id',
 
 // DELETE ////////////////////////////////////////////////////
 router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(['administrator']),
   validationHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {

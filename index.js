@@ -32,7 +32,7 @@ require('./utils/auth');
 routerApi(app)
 
 
-app.use(errorLogger);
+// app.use(errorLogger);
 app.use(ormErrorHandler);
 app.use(boomHandler);
 app.use(errorHandler);

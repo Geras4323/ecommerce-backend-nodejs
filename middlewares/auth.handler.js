@@ -1,25 +1,14 @@
 require('dotenv').config();
 const boom = require('@hapi/boom');
 
-function checkApiKey(req, res, next) {
-  const apiKey = req.headers['api'];
-  if (apiKey === process.env.API_KEY) {
-    next();
-  } else {
-    next(boom.unauthorized());
-  }
-}
-
-/*
-function checkAdminRole(req, res, next) {
-  const role = req.user.role;
-  if (role === 'administrator') {
-    next()
-  } else {
-    next(boom.forbidden(`You need administrator priviledges to do that`));
-  }
-}
-*/
+// function checkApiKey(req, res, next) {
+//   const apiKey = req.headers['api'];
+//   if (apiKey === process.env.API_KEY) {
+//     next();
+//   } else {
+//     next(boom.unauthorized());
+//   }
+// }
 
 function checkRoles(roles) {
   return (req, res, next) => {
@@ -32,4 +21,4 @@ function checkRoles(roles) {
   }
 }
 
-module.exports = { checkApiKey, checkRoles };
+module.exports = { checkRoles };

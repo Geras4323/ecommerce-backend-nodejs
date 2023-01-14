@@ -6,27 +6,27 @@ module.exports = {
   async up (queryInterface) {
     await queryInterface.bulkInsert(SUPPLIERS_TABLE, [
       {
-        name: "Eget Dictum Limited",
+        name: "Electric Dictum Limited",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: "Vitae Mauris Limited",
+        name: "Clothes Mauris Limited",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: "Ut Semper LLC",
+        name: "Bath Semper LLC",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: "Nunc LLP",
+        name: "Lights LLP",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: "Egestas Duis Incorporated",
+        name: "Furniture Duis Incorporated",
         createdAt: new Date(),
         updatedAt: new Date(),
       }

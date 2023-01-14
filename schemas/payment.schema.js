@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 const id      = Joi.number().integer().positive();
 const orderID = Joi.number().integer().positive();
-const amount  = Joi.number().positive();
+const amount  = Joi.number().min(0);
 
 const limit       = Joi.number().integer().min(0);
 const offset      = Joi.number().integer().min(0);
