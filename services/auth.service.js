@@ -18,7 +18,7 @@ class AuthService {
     }
     const token = signToken(payload, process.env.JWT_SECRET_RECOVERY, { expiresIn: '15min' });
     await userService.updatePartially(user.id, { recovery_token: token });
-    const link = `http://localhost:3000/auth/new-password/${token}`;
+    const link = `https://web-shop-next-geras4323.vercel.app/auth/new-password/${token}`;
     const emailInfo = {
       to: user.email,
       subject: "Password Recovery",
