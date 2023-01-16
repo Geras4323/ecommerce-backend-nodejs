@@ -18,12 +18,16 @@ class AuthService {
     }
     const token = signToken(payload, process.env.JWT_SECRET_RECOVERY, { expiresIn: '15min' });
     await userService.updatePartially(user.id, { recovery_token: token });
-    const link = `https://frontend.com/${token}`;
+    const link = `http://localhost:3000/auth/new-password/${token}`;
     const emailInfo = {
       to: user.email,
       subject: "Password Recovery",
-      html: `<b>A password recovery has been requested.
-      Please click this link to reset your password: ${link}</b>`,
+      html: `
+      <div>
+        <p>A password recovery has been requested.</p>
+        <p>Please click this link to reset your password: ${link}</p>
+      </div>
+      `,
     }
     const sent = await sendEMail(emailInfo);
     return sent;

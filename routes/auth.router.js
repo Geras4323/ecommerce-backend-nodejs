@@ -2,6 +2,8 @@ const express = require('express');
 const passport = require('passport');
 require('dotenv').config();
 
+const validationHandler = require('../middlewares/validation.handler');
+const { changePassword } = require('../schemas/user.schema');
 const { signToken } = require('../utils/token/signToken');
 const UserService = require('../services/user.service');
 const AuthService = require('../services/auth.service');
@@ -18,7 +20,7 @@ router.post('/login',
       const user = req.user;
       const payload = {
         sub: user.id,
-        role: user.role,
+        email: user.email,
       }
       const signedToken = signToken(payload, process.env.JWT_SECRET_LOGIN);
       res.json({ user, token: signedToken });
@@ -42,6 +44,7 @@ router.post('/recovery',
 )
 
 router.post('/change-password',
+  validationHandler(changePassword, 'body'),
   async (req, res, next) => {
     try {
       const { token, newPassword } = req.body;

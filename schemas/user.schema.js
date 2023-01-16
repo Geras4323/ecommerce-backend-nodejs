@@ -14,6 +14,8 @@ const active     = Joi.boolean();
 const limit       = Joi.number().integer().min(0);
 const offset      = Joi.number().integer().min(0);
 
+const token       = Joi.string();
+
 
 const getUserSchema = Joi.object({
   id:   id.required(),
@@ -32,7 +34,7 @@ const createUserSchema = Joi.object({
   password:   password.required(),
   first_name: first_name.required(),
   last_name:  last_name.required(),
-  phone:      phone.required(),
+  phone:      phone,
   role:       role,
   active:     active,
 })
@@ -59,10 +61,16 @@ const updatePartiallyUserSchema = Joi.object({
   active:     active,
 })
 
+const changePassword = Joi.object({
+  token:       token.required(),
+  newPassword: password.required(),
+})
+
 module.exports = {
   getUserSchema,
   queryUserSchema,
   createUserSchema,
   updateUserSchema,
-  updatePartiallyUserSchema
+  updatePartiallyUserSchema,
+  changePassword
 };
