@@ -24,8 +24,13 @@ class AuthService {
       subject: "Password Recovery",
       html: `
       <div>
-        <p>A password recovery has been requested.</p>
-        <p>Please click this link to reset your password: ${link}</p>
+        <h1 style='color: #74c27e'>A password recovery has been requested.</h1>
+        <h2 style='color: black'>Please click this link to reset your password:</h2>
+        <a href='${link}' style='width: 200px; text-align: center; vertical-align: center; font-size: 16px; display: grid; align-items: center; text-decoration: none; border-radius: 8px; color: #74c27e; background-color: white; border: 1px solid #74c27e'>
+          Recover password
+        </a>
+        <p style='font-size: 16px; color: black'>If the button doesn&apos;t work, try this link instead:</p>
+        <p>${link}</p>
       </div>
       `,
     }
