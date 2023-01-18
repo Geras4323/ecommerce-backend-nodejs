@@ -41,6 +41,15 @@ class UserService {
     return user;
   }
 
+  async findById(id) {
+    const user = await models.User.findByPk(id);
+    if (!user) {
+      throw boom.notFound('User not found');
+    } else {
+      return user;
+    }
+  }
+
   async findOne(id) {
     const user = await models.User.findByPk(id, {
       include: ['orders']

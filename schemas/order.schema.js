@@ -31,6 +31,11 @@ const createOrderSchema = Joi.object({
   total:     total.required(),
 })
 
+const confirmOrderSchema = Joi.object({
+  userID:    userID.required(),
+  orderID:   orderID.required(),
+})
+
 const addProductSchema = Joi.object({
   orderID:   orderID.required(),
   productID: productID.required(),
@@ -51,6 +56,7 @@ module.exports = {
   getOrderSchema,
   queryOrderSchema,
   createOrderSchema,
+  confirmOrderSchema,
   addProductSchema,
   updateOrderSchema,
   updatePartiallyOrderSchema,

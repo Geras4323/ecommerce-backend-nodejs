@@ -2,6 +2,7 @@ const boom = require('@hapi/boom');
 const { Op } = require('sequelize');
 
 const { models } = require('../libs/sequelize');
+const { sendEMail } = require('../utils/mails/nodemailer');
 
 
 class OrderService {
@@ -70,6 +71,29 @@ class OrderService {
       return newOrder;
     }
   }
+
+
+  async sendNotificationEmail(userData, orderData) {
+    const text = userData + orderData;
+    const emailInfoForMe = {
+      to: process.env.OWNERS_EMAIL,
+      subject: 'E-commerce - New Reservation',
+      html: text,
+    }
+    const sent = await sendEMail(emailInfoForMe);
+    return sent;
+  }
+
+  async sendConfirmationEmail(email, orderData) {
+    const emailInfoForUser = {
+      to: email,
+      subject: 'E-commerce - Reservation confirmed',
+      html: orderData,
+    }
+    const sent = await sendEMail(emailInfoForUser);
+    return sent;
+  }
+
 
   async addProduct(data) {
     const addedProduct = await models.OrderProduct.create(data);

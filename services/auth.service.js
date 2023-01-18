@@ -25,7 +25,7 @@ class AuthService {
       html: `
       <div>
         <h1 style='color: #74c27e'>A password recovery has been requested.</h1>
-        <h2 style='color: black'>Please click this link to reset your password:</h2>
+        <h2 style='color: black'>Please click this button to reset your password:</h2>
         <a href='${link}' style='width: 200px; text-align: center; vertical-align: center; font-size: 16px; display: grid; align-items: center; text-decoration: none; border-radius: 8px; color: #74c27e; background-color: white; border: 1px solid #74c27e'>
           Recover password
         </a>
