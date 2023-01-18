@@ -18,6 +18,8 @@ const service = new UserService();
 
 // GET ////////////////////////////////////////////////////
 router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(['administrator']),
   validationHandler(queryUserSchema, 'query'),
   async (req, res, next) => {
     try {
@@ -30,6 +32,8 @@ router.get('/',
 )
 
 router.get('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(['administrator']),
   validationHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -58,6 +62,8 @@ router.post('/',
 
 // PUT ////////////////////////////////////////////////////
 router.put('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(['administrator']),
   validationHandler(getUserSchema, 'params'),
   validationHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
@@ -74,6 +80,8 @@ router.put('/:id',
 
 // PATCH ////////////////////////////////////////////////////
 router.patch('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(['administrator']),
   validationHandler(getUserSchema, 'params'),
   validationHandler(updatePartiallyUserSchema, 'body'),
   async (req, res, next) => {
