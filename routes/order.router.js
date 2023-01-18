@@ -81,7 +81,7 @@ router.post('/confirmation',
       const user = await userService.findById(userID);
       const order = await orderService.findOne(orderID);
       const userData = `
-      <h3>The following user has made a reservation:</h3>
+      <h3>The following user has placed an order:</h3>
         <div style='width: 280px; padding: 0 8px; border-radius: 8px; border-bottom: 1px solid #74c27e; margin-bottom: 4px; display: flex; flex-direction: row'>
           <p style='width: 30%'><b style='text-decoration: underline'>Username</b>:</p>
           <p style='width: 70%; text-align: right'>${user.username}</p>
@@ -104,7 +104,7 @@ router.post('/confirmation',
         </div>
       `;
 
-      let orderData = `<h3>Reservation details:</h3><h4>Products:</h4>`;
+      let orderData = `<h3>Order details:</h3><h4>Products:</h4>`;
       (order.products).forEach(product => {
         const productInfo = `
           <div style='

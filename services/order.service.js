@@ -77,7 +77,7 @@ class OrderService {
     const text = userData + orderData;
     const emailInfoForMe = {
       to: process.env.OWNERS_EMAIL,
-      subject: 'E-commerce - New Reservation',
+      subject: 'E-commerce - New Order',
       html: text,
     }
     const sent = await sendEMail(emailInfoForMe);
@@ -87,7 +87,7 @@ class OrderService {
   async sendConfirmationEmail(email, orderData) {
     const emailInfoForUser = {
       to: email,
-      subject: 'E-commerce - Reservation confirmed',
+      subject: 'E-commerce - Order confirmed',
       html: orderData,
     }
     const sent = await sendEMail(emailInfoForUser);
