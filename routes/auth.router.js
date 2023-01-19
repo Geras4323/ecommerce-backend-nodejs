@@ -21,6 +21,7 @@ router.post('/login',
       const payload = {
         sub: user.id,
         email: user.email,
+        role: user.role,
       }
       const signedToken = signToken(payload, process.env.JWT_SECRET_LOGIN);
       res.json({ user, token: signedToken });

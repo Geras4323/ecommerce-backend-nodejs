@@ -33,7 +33,7 @@ router.get('/',
 
 router.get('/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles(['administrator']),
+  checkRoles(['administrator', 'customer']),
   validationHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
