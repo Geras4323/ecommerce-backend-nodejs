@@ -52,7 +52,7 @@ module.exports = {
       {
         username: "geras4323",
         email: "german432yo@gmail.com",
-        password: "$2b$10$YOLgNPpi14X3caxsj7QRbOKE8/c7znGCejkp9kBNn3DN9Q3UqFSoy",
+        password: "$2b$10$Rbima2RW0aX1o2zD7lk6oOfaVrO.z7XUGxT5qdvlT6QIgqe5rHaE6",
         first_name: "Geras",
         last_name: "Master",
         role: 'administrator',

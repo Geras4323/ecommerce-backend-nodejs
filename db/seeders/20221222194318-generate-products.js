@@ -120,7 +120,7 @@ module.exports = {
         supplierID: 3,
         name: "Towel",
         description: "Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor",
-        image: "https://www.ldoceonline.com/media/english/illustration/towel.jpg?version=1.2.59",
+        image: "https://www.bigw.com.au/medias/sys_master/images/images/h9f/hb4/33695718866974.jpg",
         price: 63.13,
         createdAt: new Date(),
         updatedAt: new Date(),
